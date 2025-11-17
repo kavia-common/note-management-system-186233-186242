@@ -1,82 +1,72 @@
-# Lightweight React Template for KAVIA
+# Ocean Notes (Frontend)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A modern, minimalist note-taking React app using the "Ocean Professional" style (blue and amber accents), with a header, sidebar, and editor layout. Includes a mockable API client and autosave.
+
+## Quick Start
+
+1. Install dependencies
+   ```
+   npm install
+   ```
+
+2. Run in development
+   ```
+   npm start
+   ```
+
+3. Open the app at http://localhost:3000
 
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- Header with brand, search, and theme toggle (light/dark)
+- Sidebar with note list and New Note action
+- Note editor with title and content, debounced autosave, and delete
+- Client-side search filter
+- Toast notifications and delete confirmation modal
+- Mock mode for API-free development
 
-## Getting Started
+## Environment Variables
 
-In the project directory, you can run:
+Provide environment variables via `.env` (do not commit secrets). The app recognizes:
 
-### `npm start`
+- `REACT_APP_API_BASE`: Base URL for backend API (e.g., https://api.example.com)
+- `REACT_APP_BACKEND_URL`: Alternative base URL (used if API_BASE absent)
+- `REACT_APP_FEATURE_FLAGS`: JSON string for features, e.g.:
+  - `{"mockNotes": true, "mockLatencyMs": 250}` to enable in-memory notes and simulate latency
+- Other container-provided envs (not used directly here but reserved):
+  - REACT_APP_FRONTEND_URL, REACT_APP_WS_URL, REACT_APP_NODE_ENV,
+    REACT_APP_NEXT_TELEMETRY_DISABLED, REACT_APP_ENABLE_SOURCE_MAPS,
+    REACT_APP_PORT, REACT_APP_TRUST_PROXY, REACT_APP_LOG_LEVEL,
+    REACT_APP_HEALTHCHECK_PATH, REACT_APP_EXPERIMENTS_ENABLED
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+When both `REACT_APP_API_BASE` and `REACT_APP_BACKEND_URL` are absent and `mockNotes` is false, network calls will fail. Use mock mode during development if the backend is not available.
 
-### `npm test`
-
-Launches the test runner in interactive watch mode.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-## Customization
-
-### Colors
-
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
+Example `.env`:
+```
+REACT_APP_FEATURE_FLAGS={"mockNotes":true,"mockLatencyMs":200}
+# REACT_APP_API_BASE=https://api.your-backend.tld
 ```
 
-### Components
+## Keyboard Shortcuts
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+- Ctrl/Cmd+N: New note
+- Ctrl/Cmd+S: Save (debounced autosave triggers)
+- Delete: Delete selected note (prompts confirmation)
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+## Scripts
 
-## Learn More
+- `npm start` – Start dev server
+- `npm test` – Run tests
+- `npm run build` – Production build
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Styling
 
-### Code Splitting
+- Theme variables in `src/styles/theme.css`
+- Layout styles in `src/App.css`
+- Light/Dark theme toggled via document `data-theme` attribute
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Accessibility
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Semantic labels on controls
+- Focus-visible ring for keyboard users
+- ARIA attributes on lists, options, and modal dialog
